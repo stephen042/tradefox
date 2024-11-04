@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
                                                             <tbody>
                                                                 <tr>
                                                                     <td style="padding: 0 20px; text-align: center; height: 100px">
-                                                                    <img src="' . $siteurl . '/emaillogo.png" style="width: 45%; vertical-align: middle">
+                                                                    <img src="' . $siteurl . '/logo.png" style="width: 45%; vertical-align: middle">
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -146,7 +146,6 @@ if (isset($_POST['submit'])) {
                                                                                       </p>
                                                                                       <p style="margin: 0 0 10px 0;">
                                                                                           Please login using the following information:<br>
-                                                                                          Username: ' . $username . '<br>
                                                                                           Email: ' . $email_address . '<br>
                                                                                           Password: ' . $password . '
                                                                                       </p>
