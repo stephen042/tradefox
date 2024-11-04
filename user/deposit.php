@@ -44,7 +44,37 @@ if (isset($_POST['deposit'])) {
 
 							$email = $user_row['email'];
 							$subject = "Deposit Request";
-							$message = "<p>Hello,</p> <p>We are pleased to inform you that your recent deposit request of $$amount via $payment_method has been submitted, upon confirmation your account will be credited.</p> ";
+							$message = '<!DOCTYPE html>
+							<html lang="en">
+							<head>
+							<meta charset="UTF-8">
+							<meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<title>Deposit Confirmation</title>
+							</head>
+							<body style="font-family: Arial, sans-serif; color: #e1e1e1; background-color: #1a1a1a; margin: 0; padding: 40px;">
+							<!-- Outer container with darker background -->
+							<div style="max-width: 600px; margin: auto; background-color: #2b2b2b; padding: 30px; border-radius: 10px; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);">
+								<!-- Inner container with lighter background -->
+								<div style="background-color: #3a3a3a; padding: 25px; border-radius: 8px;">
+								<h2 style="color: #ffffff; text-align: center; margin-bottom: 20px;">Deposit Confirmation</h2>
+								
+								<p style="font-size: 16px; color: #cccccc;">Hello,</p>
+								
+								<p style="font-size: 16px; color: #d3d3d3; line-height: 1.6;">
+									We are pleased to inform you that your recent deposit request of 
+									<span style="color: #00c851; font-weight: bold;">$<?= htmlspecialchars($amount) ?></span> 
+									via <span style="color: #33b5e5; font-weight: bold;"><?= htmlspecialchars($payment_method) ?></span> has been successfully submitted.
+									Once confirmed, your account will be credited accordingly.
+								</p>
+								
+								<p style="font-size: 16px; color: #cccccc; margin-top: 30px;">Best regards,</p>
+								
+								<p style="font-size: 16px; color: #ffffff; font-weight: bold;">The 247XPips Team</p>
+								</div>
+							</div>
+							</body>
+							</html>
+							';
 
 							sendMail($email, $subject, $message);
 
