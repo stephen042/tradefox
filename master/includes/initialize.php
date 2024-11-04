@@ -5,6 +5,7 @@ defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 defined('APP_ROOT') ? null : define ('APP_ROOT', $_SERVER['DOCUMENT_ROOT'].DS.'master');
 defined('INCLUDE_PATH') ? null : define ('INCLUDE_PATH',APP_ROOT.DS.'includes');
 ob_start();
+session_save_path('/opt/alt/php82/var/lib/php/session');
 session_start();
 // load config file first 
 require_once("connection.php");
