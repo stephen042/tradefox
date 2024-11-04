@@ -647,6 +647,9 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="col-lg-6 col-xl-6 d-none d-lg-block text-center bg-primary details rounded-end-11">
                             <div class="mt-4 pt-5 p-2 pos-relative">
+                                <a href="index.html">
+                                    <img src="logo.png" class="header-brand-img mb-3 mt-3" alt="logo">
+                                </a>
                                 <div class="clearfix"></div>
                                 <img src="reg.svg" class="ht-250 mb-0" alt="user">
                                 <h2 class="mt-4 text-white tx-normal">Create Your Account</h2>
