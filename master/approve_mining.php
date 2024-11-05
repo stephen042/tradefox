@@ -59,7 +59,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td style="padding: 0 20px; text-align: center; height: 100px">
-                                                                 <img src="https://global-emmytyips.com/emaillogo.png" style="width: 45%; vertical-align: middle">
+                                                                 <img src="'.$site_url.'/logo.png" style="width: 45%; vertical-align: middle">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
