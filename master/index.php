@@ -59,7 +59,7 @@ if(isset($_POST['login'])){
   <meta name="author" content=""/>
   <title>Administrator | <?=$site_name?></title>
   <!--favicon-->
-  <link rel="icon" href="dist/images/favicon.png" type="image/x-icon">
+  <link rel="icon" href="../favicon.png" type="image/x-icon">
   <!-- Bootstrap core CSS-->
   <link href="dist/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- animate CSS-->
@@ -78,7 +78,7 @@ if(isset($_POST['login'])){
     <div class="card-body">
      <div class="card-content p-2">
       <div class="text-center">
-        <img src="dist/images/logo-icon.png">
+        <img src="../logo.png">
       </div>
       <div class="card-title text-uppercase text-center py-3">Admin Login</div>
       <?php get_message(); ?>
