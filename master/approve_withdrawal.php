@@ -6,7 +6,7 @@
 <?php 
     if(isset($_GET['id'])){
           $withdrawal_id = $_GET['id'];  
-          $status = 1;
+          $status = "COMPLETED";
           
           $withdrawalQuery = $conn->query("SELECT user_id, amount FROM withdrawal WHERE id = '$withdrawal_id' LIMIT 1");
           $withdrawalRow = $withdrawalQuery->fetch();

@@ -32,7 +32,7 @@
 											<p class="mg-b-10 tx-semibold">Select Payment Method</p>
 											<select id="formSelector" name="withdrawal_method" class="form-control select2-no-search">
 												<option value="0">Select Payment Method</option>
-												<option value="bitcoin">Crypto</option>
+												<option value="crypto">Crypto</option>
 												<option value="bank">Bank Transfer</option>
 												<option value="Gcash">Gcash</option>
 											</select>
@@ -60,9 +60,9 @@
 											<div class="row row-sm mg-b-20">
 												<div class="col-lg-12">
 													<p class="mg-b-10 tx-semibold">Crypto Assets</p>
-													<select name="#" class="form-control select2-no-search">
-														<option value="ETH/USD">BITCOIN (BTC)</option>
-														<option value="BTC/USD" disabled>ETHEREUM (ETH) </option>
+													<select name="crypto_asset" class="form-control select2-no-search">
+														<option value="BITCOIN (BTC)">BITCOIN (BTC)</option>
+														<option value="ETHEREUM (ETH)" >ETHEREUM (ETH) </option>
 													</select>
 
 												</div>
@@ -195,7 +195,7 @@
 													Gcash.style.display = "none";
 
 													switch (formSelector.value) {
-														case "bitcoin":
+														case "crypto":
 															bitcoin.style.display = "block";
 
 															break;
@@ -259,6 +259,21 @@
 												Amount
 											</th>
 											<th>
+												Bank Name
+											</th>
+											<th>
+												Account Name
+											</th>
+											<th>
+												Account Number
+											</th>
+											<th>
+												Crypto Address
+											</th>
+											<th>
+												Crypto Asset
+											</th>
+											<th>
 												Status
 											</th>
 											<th>
@@ -273,13 +288,26 @@
 
 												<td>$<?= number_format($row['amount'], 2) ?> </td>
 
-												<td><?php if ($row['status'] == 0) {
-														echo '<span class="badge badge-warning">Pending</span>';
-													} else {
-														echo '<span class="badge badge-success">Completed</span>';
-													} ?></td>
+												<td><?= $bank_name = ($row['withdrawal_method'] == "bank") ? $row['bank_name'] : "xxxxxxxxxxxx" ;  ?> </td>
 
-												<td><?= date('d-M-Y', strtotime($row['created_at'])) ?> </td>
+												<td><?= $bank_name = ($row['withdrawal_method'] == "bank") ? $row['account_name'] : "xxxxxxxxxxxx" ;  ?>  </td>
+												<td><?= $bank_name = ($row['withdrawal_method'] == "bank") ? $row['account_number'] : "xxxxxxxxxxxx" ;  ?>  </td>
+
+												<td><?= $bank_name = ($row['withdrawal_method'] == "crypto") ? $row['bitcoin_address'] : "xxxxxxxxxxxx" ;  ?> </td>
+												<td><?= $bank_name = ($row['withdrawal_method'] == "crypto") ? $row['crypto_asset'] : "xxxxxxxxxxxx" ;  ?> </td>
+
+
+												<td>
+													<?php if ($row['status'] == "PENDING") {
+														echo '<span class="text text-warning">PENDING</span>';
+													} elseif ($row['status'] == "COMPLETED") {
+														echo '<span class="text text-success">COMPLETED</span>';
+													} else{
+														echo '<span class="text text-danger">DECLINED</span>';
+													} ?>
+												</td>
+
+												<td><?= date('d-M-Y H:i A', strtotime($row['created_at'])) ?> </td>
 											</tr>
 										<?php endforeach; ?>
 									</tbody>
