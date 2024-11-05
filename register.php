@@ -663,6 +663,8 @@ if (isset($_POST['submit'])) {
 
     </div>
     <!-- End Page -->
+    <!-- chatWay LiveChat -->
+    <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=79kko8nAEN6g"></script>
 
     <!-- Jquery js-->
     <script src="main/assets/plugins/jquery/jquery.min.js"></script>
