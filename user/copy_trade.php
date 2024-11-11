@@ -12,14 +12,14 @@ try {
     // Check if user is copying the trade or canceling it
     if ($trade_copied == 0) {
         // Subtract amount from account balance
-        $balance_stmt = $conn->prepare("SELECT account_balance FROM account WHERE user_id = :user_id");
+        $balance_stmt = $conn->prepare("SELECT sub_balance FROM account WHERE user_id = :user_id");
         $balance_stmt->bindParam(':user_id', $user_id);
         $balance_stmt->execute();
         $balance = $balance_stmt->fetchColumn();
 
         if ($balance >= $amount) {
             // Update the account balance
-            $update_stmt = $conn->prepare("UPDATE account SET account_balance = account_balance - :amount WHERE user_id = :user_id");
+            $update_stmt = $conn->prepare("UPDATE account SET sub_balance = sub_balance - :amount WHERE user_id = :user_id");
             $update_stmt->bindParam(':amount', $amount);
             $update_stmt->bindParam(':user_id', $user_id);
             $update_stmt->execute();
@@ -33,8 +33,8 @@ try {
             // Success message
             set_message('<script>
                 Swal.fire(
-                  "Copy Trade!",
-                  "You have successfully purchased this Subscription!",
+                  "Purchase Success!",
+                  "You have successfully purchased this Signal Subscription!",
                   "success"
                 );
               </script>');
@@ -46,16 +46,16 @@ try {
               $user_row = $user_stmt->fetch(PDO::FETCH_ASSOC);
 
               $email = $user_row['email'];
-							$subject = "Subscription Successful";
-							$message = "<p>Hello,</p> <p>We are pleased to inform you that your recent Signal purchase of $$amount was successful, and your subscription is now active.</p> <h2>We look forward to your continued support.</h2>";
+							$subject = "Signal Subscription Successful";
+							$message = "<p>Hello,</p> <p>We are pleased to inform you that your recent Signal Subscription purchase of $$amount was successful, and your Signal subscription is now active.</p> <h2>We look forward to your continued support.</h2>";
 
 							sendMail($email, $subject, $message);
         } else {
             // Insufficient balance message
             set_message('<script>
                 Swal.fire(
-                  "Copy Trade!",
-                  "Insufficient funds to purchase this subscription.",
+                  "Purchase Error!",
+                  "Insufficient funds to purchase this Signal subscription.",
                   "error"
                 );
               </script>');
@@ -71,8 +71,8 @@ try {
         // Success message for cancellation
         set_message('<script>
             Swal.fire(
-              "Copy Trade!",
-              "You have successfully cancelled the Subscription.",
+              "Purchase Cancel!",
+              "You have successfully cancelled the Signal Subscription.",
               "success"
             );
           </script>');

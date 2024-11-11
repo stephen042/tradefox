@@ -49,7 +49,7 @@ if(isset($_POST['subscribe'])){
           <script>
             Swal.fire(
               "Insufficient Funds",
-              "You do not have enough funds on your account. Please make a deposit",
+              "You do not have enough funds on your account. Please make a subscription deposit",
               "warning"
             );
           </script>
@@ -58,8 +58,8 @@ if(isset($_POST['subscribe'])){
     } elseif ($amount < $minimum_deposit) {
         set_message('<script>
             Swal.fire(
-              "Minimum Deposit!",
-              "Minimum deposit amount for '.$plan_name.' plan is $'.$minimum_deposit.'. Please increase amount",
+              "Minimum Amount!",
+              "Minimum amount for '.$plan_name.' plan is $'.$minimum_deposit.'. Please increase amount",
               "warning",
             );
         </script>');
@@ -74,14 +74,14 @@ if(isset($_POST['subscribe'])){
             $subscriptionQuery->bindParam(':created', $created);
             $subscriptionQuery->execute();
 
-            $new_balance = $acct_row['account_balance'] - $amount;
-            $updateQuery = $conn->query("UPDATE account SET account_balance = '$new_balance' WHERE id = '$accountID'");
+            $new_balance = $acct_row['sub_balance'] - $amount;
+            $updateQuery = $conn->query("UPDATE account SET sub_balance = '$new_balance' WHERE id = '$accountID'");
             $updateQuery->execute();
 
             $conn->commit();
 
           $message = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Withdrawal</title></head><body style="margin:0px; font-family:Tahoma, Geneva, sans-serif;"><div style="padding:10px; background:#333; font-size:24px; color:#CCC;">Withdrawal Request</div><div style="padding:24px; font-size:17px;">
-          <p>You just purchased an investment package with the following details:</p>
+          <p>You just purchased a Subscription package with the following details:</p>
           <table border="1">
             <tr>
                 <th>Fullname: </th>

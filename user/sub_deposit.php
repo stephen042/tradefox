@@ -6,6 +6,7 @@ if (isset($_POST['deposit'])) {
 		if (isset($_FILES['payment_verify']) && $_FILES['payment_verify']['error'] === UPLOAD_ERR_OK) {
 			// retrieve the values submitted via the form
 			$payment_method = strip_tags($_POST['payment_method']);
+            $payment_type = strip_tags($_POST['payment_type']);
 			$amount = strip_tags($_POST['amount']);
 			$accountID = strip_tags($acct_row['id']);
 			$fullname = $user_row['fullname'];
@@ -33,9 +34,10 @@ if (isset($_POST['deposit'])) {
 					if (move_uploaded_file($paymentVerifyTmpPath, $dest_path)) {
 						$conn->beginTransaction();
 						try {
-							$insert_stmt = $conn->prepare('INSERT INTO deposit(user_id,payment_method,amount,payment_verify,created_at) VALUES (:uid, :method, :amount, :payment_verify, :created)');
+							$insert_stmt = $conn->prepare('INSERT INTO deposit(user_id,payment_method,payment_type,amount,payment_verify,created_at) VALUES (:uid, :method, :payment_type, :amount, :payment_verify, :created)');
 							$insert_stmt->bindParam(':uid', $user);
 							$insert_stmt->bindParam(':method', $payment_method);
+                            $insert_stmt->bindParam(':payment_type', $payment_type);
 							$insert_stmt->bindParam(':amount', $amount);
 							$insert_stmt->bindParam(':payment_verify', $newPaymentVerifyFileName);
 							$insert_stmt->bindParam(':created', $created);
@@ -43,7 +45,7 @@ if (isset($_POST['deposit'])) {
 							$conn->commit();
 
 							$email = $user_row['email'];
-							$subject = "Deposit Request";
+							$subject = "Subscription Deposit Request";
 							$message = '<!DOCTYPE html>
 							<html lang="en">
 							<head>
@@ -61,7 +63,7 @@ if (isset($_POST['deposit'])) {
 								<p style="font-size: 16px; color: #cccccc;">Hello,</p>
 								
 								<p style="font-size: 16px; color: #d3d3d3; line-height: 1.6;">
-									We are pleased to inform you that your recent deposit request of 
+									We are pleased to inform you that your recent subscription deposit request of 
 									<span style="color: #00c851; font-weight: bold;">$'.number_format($amount, 2).'</span> 
 									via <span style="color: #33b5e5; font-weight: bold;">'.ucfirst($payment_method).'</span> has been successfully submitted.
 									Once confirmed, your account will be credited accordingly.
@@ -79,9 +81,9 @@ if (isset($_POST['deposit'])) {
 							sendMail($email, $subject, $message);
 
 							set_message('<div class="alert alert-success">
-                      <i class="fa fa-info-circle"></i> Deposit request of $' . number_format($amount, 2). ' is being verified. Your account will be credited upon payment confirmation
+                      <i class="fa fa-info-circle"></i> Subscription Deposit request of $' . number_format($amount, 2). ' is being verified. Your account will be credited upon payment confirmation
                     </div>');
-							redirect_to("deposit.php");
+							redirect_to("sub_deposit.php");
 						} catch (Exception $e) {
 							$conn->rollBack();
 							set_message('<div class="alert alert-danger">
@@ -111,14 +113,14 @@ if (isset($_POST['deposit'])) {
 			<div id="mobileshow" class="see"></div>
 			<div class="sees hide-mobile"></div>
 			<div class="alert alert-warning" role="alert">
-				<h4 class="alert-heading">Deposit Instruction</h4>
+				<h4 class="alert-heading">Subscription Deposit Instruction</h4>
 				<p>Copy the address of your preferred currency and make payment to the address only</p>
 				<hr>
 				<p class="mb-0">Click on I HAVE MADE PAYMENT afterwards</p>
 			</div>
 			<div class="row">
 				<div class="col">
-					<h4>Account Balance: $<?php echo number_format($acct_row['account_balance'], 2); ?></h4>
+					<h4>Subscription Balance: $<?php echo number_format($acct_row['sub_balance'], 2); ?></h4>
 				</div>
 				<hr class="border border-gray">
 			</div>
@@ -194,7 +196,7 @@ if (isset($_POST['deposit'])) {
 					<div class="card custom-card overflow-hidden">
 						<div class="card-header border-bottom">
 							<div>
-								<h3 class="card-title tx-18"><label class="main-content-label tx-15">Deposit History</label></h3>
+								<h3 class="card-title tx-18"><label class="main-content-label tx-15">Subscription Deposit History</label></h3>
 							</div>
 						</div>
 						<div class="card-body pb-2">
@@ -215,7 +217,8 @@ if (isset($_POST['deposit'])) {
 												Date
 											</th>
 										</tr>
-										<?php $deposit_list = $conn->query("SELECT * FROM deposit WHERE user_id = '$user' ORDER BY created_at DESC"); ?>
+										<?php $deposit_list = $conn->query("SELECT * FROM deposit WHERE user_id = '$user' AND payment_type = 1 ORDER BY created_at DESC");?>
+
 										<?php $n = 1; ?>
 										<?php foreach ($deposit_list as $row): ?>
 											<tr>
@@ -262,7 +265,7 @@ if (isset($_POST['deposit'])) {
 			<div class="modal-body modal-body pd-y-20 pd-x-20">
 
 
-				<form class="form" action="deposit.php" method="post" enctype="multipart/form-data">
+				<form class="form" action="sub_deposit.php" method="post" enctype="multipart/form-data">
 					<div class="form-row">
 						<div class="form-group col-md-12">
 							<strong class="text-info d-block mt-1">
@@ -292,6 +295,7 @@ if (isset($_POST['deposit'])) {
 							<label for="payment_verify">Upload Payment Reciept</label>
 							<input type="file" name="payment_verify" class="form-control" required="">
 						</div>
+                        <input type="hidden" name="payment_type" value="1">
 						<div class="form-group col-md-12 my-2">
 							<div class="row">
 								<button type="submit" name="deposit" class="btn btn-primary col-md-12">Notify for Deposit</button>

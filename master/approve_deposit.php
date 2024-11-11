@@ -21,7 +21,7 @@
         $accountQuery = $conn->query("SELECT * FROM account WHERE user_id = '$user_id' LIMIT 1");
         $accountRow = $accountQuery->fetch();
         $account_id = $accountRow['id'];
-        $currentAccountBalance = $accountRow['account_balance'];
+        $currentAccountBalance = $accountRow['sub_balance'];
 
         $newAccountBalance = $amount + $currentAccountBalance;
           
@@ -31,12 +31,13 @@
               $deposit_stmt->bindParam(':s', $status);
               $deposit_stmt->execute();
 
-              $updateQuery = $conn->prepare("UPDATE account SET account_balance =:bal WHERE id =:id");
+              $updateQuery = $conn->prepare("UPDATE account SET sub_balance =:bal WHERE id =:id");
               $updateQuery->bindParam(':bal', $newAccountBalance);
               $updateQuery->bindParam(':id', $account_id);
               $updateQuery->execute();
 
               $conn->commit();
+              $deposit_type = ($depositRow['payment_type'] == 1) ? "Subscription Deposit" : "Deposit" ;
 
               $mail_body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -47,7 +48,7 @@
                     <title></title>
                   </head>
                   <body>
-                    <table cellpadding="0" cellspacing="0" border="0" class="bgtc" align="center" style="border-collapse: collapse; line-height: 100% !important; margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100% !important">
+                    <table cellpadding="0" cellspacing="0" border="0" class="btc" align="center" style="border-collapse: collapse; line-height: 100% !important; margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100% !important">
                         <tbody>
                             <tr>
                                 <td>
@@ -76,7 +77,7 @@
                                                                                     Hello '.$fullname.',
                                                                                 </p>
                                                                                 <p style="margin: 0 0 10px 0;">
-                                                                                    Your deposit of $'.number_format($amount, 2).' has been confirmed. Trading account has been credited 
+                                                                                    Your '.$deposit_type.' of $'.number_format($amount, 2).' has been confirmed. Your account has been credited 
                                                                                 </p>
                                                                                 <p style="margin: 50px 0 0px 0; color: #8b8b8b">
                                                                                     Regards,<br>

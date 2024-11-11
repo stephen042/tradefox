@@ -43,6 +43,7 @@
                   <tr>
                     <th>S/n</th>
                     <th>Fullname</th>
+                    <th>Payment Type</th>
                     <th>Payment Method</th>
                     <th>Amount</th>
                     <th>Screenshot</th>
@@ -52,13 +53,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                <?php $deposit_list = $conn->query("SELECT users.id AS uid, deposit.id AS did, fullname, payment_method, amount, payment_verify, created_at, deposit.status FROM users INNER JOIN deposit ON users.id = deposit.user_id ORDER BY created_at DESC");
+                <?php $deposit_list = $conn->query("SELECT users.id AS uid, deposit.id AS did, fullname, payment_method, payment_type, amount, payment_verify, created_at, deposit.status FROM users INNER JOIN deposit ON users.id = deposit.user_id ORDER BY created_at DESC");
                 ?>
                 <?php $sn = 1; ?>
-                <?php while($row = $deposit_list->fetch()){ ?>
+                <?php while($row = $deposit_list->fetch()){?>
                   <tr>
                     <td><?php echo $sn++; ?></td>
                     <td><?php echo $row['fullname'] ?></td>
+                    <td>
+                      <?php echo $payment_type = ($row['payment_type'] == 1) ? 'Subscription Deposit' : 'Deposit' ; ?>
+                    </td>
                     <td><?php echo $row['payment_method']; ?></td>
                     <td>$<?php echo number_format($row['amount'],2); ?></td>
                     <td style='white-space: nowrap'>
