@@ -43,10 +43,10 @@
 													</div>
 													<hr class="border dashed">
 													<div class="row my-2">
-														<div class="col-md-4 mx-auto float-start">
+														<div class="col-md-4 mx-auto float-start w-50">
 															<button type="submit" name="upload_profile_image" class="btn btn-primary col-sm-12 confirm-action">Upload</button>
 														</div>
-														<div class="col-md-4 mx-auto float-end">
+														<div class="col-md-4 mx-auto float-end w-50">
 															<button type="submit" name="delete_profile_image" class="btn btn-danger col-sm-12 confirm-action">Delete</button>
 														</div>
 													</div>
