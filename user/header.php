@@ -44,6 +44,8 @@ $user = $_SESSION['user_id'];
 $get_user = $conn->query("SELECT * FROM users WHERE id = '$user' LIMIT 1");
 $user_row = $get_user->fetch();
 
+$profile_image = $conn->query("SELECT * FROM profile_image WHERE user_id = $user LIMIT 1")->fetch();
+
 $acct_query = $conn->query("SELECT * FROM account WHERE user_id = '$user' LIMIT 1");
 $acct_row = $acct_query->fetch();
 
@@ -211,7 +213,11 @@ $title = "Trading Center";
 					<div class="dropdown d-flex main-profile-menu">
 						<a class="d-flex" href="javascript:;">
 							<span class="main-img-user">
-								<img alt="avatar" src="uploads/avatar/avatar.png">
+								<?php if (!$profile_image): ?>
+									<img alt="" src="uploads/avatar/avatar.png">
+								<?php else: ?>
+									<img alt="" src="../uploads/profile/<?= $profile_image['file_path'] ?>" class="img-responsive img-fluid" width="50" height="50">
+								<?php endif; ?>
 							</span>
 						</a>
 						<div class="dropdown-menu">

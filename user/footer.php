@@ -76,6 +76,25 @@
  	</script>
  <?php endif; ?>
 
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Select all elements with the "confirm-action" class
+			const confirmButtons = document.querySelectorAll('.confirm-action');
+			
+			confirmButtons.forEach(button => {
+				button.addEventListener('click', function(event) {
+					// Show confirmation dialog
+					const isConfirmed = confirm("Are you sure you want to take this action?");
+					
+					// Prevent form submission if the user cancels
+					if (!isConfirmed) {
+						event.preventDefault();
+					}
+				});
+			});
+		});
+	</script>
+
  <!-- chatWay LiveChat -->
  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=79kko8nAEN6g"></script>
  <!-- Jquery js-->

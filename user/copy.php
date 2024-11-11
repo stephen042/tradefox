@@ -101,23 +101,4 @@
 	</div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Select all elements with the "confirm-action" class
-        const confirmButtons = document.querySelectorAll('.confirm-action');
-        
-        confirmButtons.forEach(button => {
-            button.addEventListener('click', function(event) {
-                // Show confirmation dialog
-                const isConfirmed = confirm("Are you sure you want to take this action?");
-                
-                // Prevent form submission if the user cancels
-                if (!isConfirmed) {
-                    event.preventDefault();
-                }
-            });
-        });
-    });
-</script>
-
 <?php include("footer.php"); ?>
