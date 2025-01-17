@@ -126,7 +126,7 @@
 														<div class="media-icon bg-info-transparent text-info"> <i class="icon ion-md-link"></i> </div>
 														<div class="media-body"> <span>Referral</span>
 															<div class="input-group">
-																<input type="text" class="form-control input-lg" id="wallet-address" value="https://trustworthytraders.com/register.php?ref=<?= $user_row['username'] ?>">
+																<input type="text" class="form-control input-lg" id="wallet-address" value="https://247xpips.live/register.php?ref=<?= $user_row['username'] ?>">
 																<div class="input-group-prepend">
 																	<button class="btn btn-primary clipboard-icon clipboard-box" data-clipboard-target="#wallet-address">COPY</button>
 																</div>
